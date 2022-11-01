@@ -7,6 +7,7 @@ import SignIn from "./components/SignIn";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Articles from "./components/Articles";
+import ArticlesByTopic from "./components/ArticlesByTopic";
 
 function App() {
   const [user, setUser] = useState("Moroti");
@@ -22,6 +23,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/articles" element={<Articles />} />
+                <Route path="/topics" element={<Home />} />
+                <Route path="/topics/:topic" element={<ArticlesByTopic />} />
               </Routes>
             </>
           )}
