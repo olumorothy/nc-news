@@ -6,6 +6,6 @@ const newsApi = axios.create({
 
 export const fetchArticles = () => {
   return newsApi.get("/articles").then((res) => {
-    return res.data;
+    return res.data.articles;
   });
 };

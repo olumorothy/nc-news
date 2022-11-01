@@ -9,7 +9,7 @@ export default function Articles() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchArticles().then(({ articles }) => {
+    fetchArticles().then((articles) => {
       setArticles(articles);
       setIsLoading(false);
     });
