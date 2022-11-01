@@ -4,10 +4,13 @@ import { fetchTopics } from "../Api";
 
 export default function Home() {
   const [topics, setTopics] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetchTopics().then((listOfTopics) => {
       setTopics(listOfTopics);
+      setIsLoading(false);
     });
   }, []);
 
