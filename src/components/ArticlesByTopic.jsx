@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetchArticles } from "../Api";
 import { ListGroup, Button, Badge, Spinner } from "react-bootstrap";
+import Voter from "./Voter";
 
 export default function ArticlesByTopic() {
   const { topic } = useParams();
@@ -48,6 +49,10 @@ export default function ArticlesByTopic() {
                     <Badge bg="secondary">{article.comment_count}</Badge>
                     <span className="visually-hidden">Number of comments</span>
                   </Button>
+                  <Voter
+                    votes={article.votes}
+                    article_id={article.article_id}
+                  />
                 </div>
               </ListGroup.Item>
             </ListGroup>
