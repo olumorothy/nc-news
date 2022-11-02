@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchArticles } from "../Api";
 import { ListGroup, Button, Badge, Spinner } from "react-bootstrap";
 
@@ -36,11 +36,16 @@ export default function ArticlesByTopic() {
                 className="d-flex justify-content-between align-items-start"
               >
                 <div className="ms-2 me-auto">
-                  <div className="fw-bold">{article.title}</div>
+                  <div className="fw-bold">
+                    <Link to={`/articles/${article.article_id}`}>
+                      {article.title}
+                    </Link>
+                  </div>
                   In {article.topic} ✡ Posted by {article.author} ✡ At{" "}
                   {article.created_at.substring(0, 10)}
                   <Button variant="primary">
-                    💬 Comments <Badge bg="secondary">{0}</Badge>
+                    💬 Comments{" "}
+                    <Badge bg="secondary">{article.comment_count}</Badge>
                     <span className="visually-hidden">Number of comments</span>
                   </Button>
                 </div>
