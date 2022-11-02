@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Articles from "./components/Articles";
 import ArticlesByTopic from "./components/ArticlesByTopic";
+import SingleArticle from "./components/SingleArticle";
 
 function App() {
   const [user, setUser] = useState("Moroti");
@@ -25,6 +26,10 @@ function App() {
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/topics" element={<Home />} />
                 <Route path="/topics/:topic" element={<ArticlesByTopic />} />
+                <Route
+                  path="/articles/:article_id"
+                  element={<SingleArticle />}
+                />
               </Routes>
             </>
           )}

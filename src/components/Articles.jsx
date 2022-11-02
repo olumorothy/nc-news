@@ -16,7 +16,7 @@ export default function Articles() {
   }, []);
   return (
     <>
-      <h1>List of All Articles</h1>
+      <h1 className="articles-h1">All Articles</h1>
 
       {isLoading ? (
         <Spinner animation="border" role="status">
