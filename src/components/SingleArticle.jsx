@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Spinner, Button, Badge } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { fetchArticlesById } from "../Api";
+import Voter from "./Voter";
 
 export default function SingleArticle() {
   const { article_id } = useParams();
@@ -37,6 +38,7 @@ export default function SingleArticle() {
               </Button>
             </Card.Subtitle>
             <Card.Text>{body}</Card.Text>
+            <Voter votes={votes} article_id={article_id} />
             <Button>Add a comment</Button>
           </Card.Body>
         </Card>

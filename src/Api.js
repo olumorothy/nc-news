@@ -20,3 +20,11 @@ export const fetchArticlesById = (article_id) => {
     return res.data.article;
   });
 };
+
+export const patchArticlesById = (article_id, value) => {
+  return newsApi
+    .patch(`/articles/${article_id}`, { inc_votes: value })
+    .then((res) => {
+      return res.data;
+    });
+};
