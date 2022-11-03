@@ -38,7 +38,7 @@ export default function SingleArticle() {
               </Button>
             </Card.Subtitle>
             <Card.Text>{body}</Card.Text>
-            <Voter votes={votes} />
+            <Voter votes={votes} article_id={article_id} />
             <Button>Add a comment</Button>
           </Card.Body>
         </Card>
