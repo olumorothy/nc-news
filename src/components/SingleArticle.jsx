@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { Card, Spinner, Button, Badge } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { fetchArticlesById } from "../Api";
+import { fetchArticlesById, fetchCommentByArticleId } from "../Api";
+import CommentList from "./CommentList";
+import Voter from "./Voter";
 
 export default function SingleArticle() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
     fetchArticlesById(article_id).then((articleInfo) => {
       setArticle(articleInfo);
       setIsLoading(false);
+    });
+    fetchCommentByArticleId(article_id).then((commentInfo) => {
+      setComments(commentInfo);
     });
   }, [article_id]);
 
@@ -37,8 +43,10 @@ export default function SingleArticle() {
               </Button>
             </Card.Subtitle>
             <Card.Text>{body}</Card.Text>
+            <Voter votes={votes} article_id={article_id} />
             <Button>Add a comment</Button>
           </Card.Body>
+          <CommentList comments={comments} />
         </Card>
       )}
     </div>

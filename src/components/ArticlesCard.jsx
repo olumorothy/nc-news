@@ -18,11 +18,13 @@ function ArticlesCard({ article }) {
             <Link to={`/articles/${article_id}`}>{title}</Link>
           </div>
           In {topic} ✡ Posted by {author} ✡ At {formattedDate}
-          <Button variant="primary">
-            💬 Comments <Badge bg="secondary">{comment_count}</Badge>
-            <span className="visually-hidden">Number of comments</span>
-          </Button>
           <Voter article_id={article_id} votes={votes} />
+          <Link to={`/articles/${article_id}`}>
+            <Button variant="primary">
+              💬 Comments <Badge bg="secondary">{comment_count}</Badge>
+              <span className="visually-hidden">Number of comments</span>
+            </Button>
+          </Link>
         </div>
       </ListGroup.Item>
     </ListGroup>

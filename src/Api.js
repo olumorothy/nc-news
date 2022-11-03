@@ -28,3 +28,9 @@ export const patchArticlesById = (article_id, value) => {
       return res.data;
     });
 };
+
+export const fetchCommentByArticleId = (article_id) => {
+  return newsApi.get(`/articles/${article_id}/comments`).then((res) => {
+    return res.data.comments;
+  });
+};
