@@ -44,15 +44,19 @@ export default function ArticlesByTopic() {
                   </div>
                   In {article.topic} ✡ Posted by {article.author} ✡ At{" "}
                   {article.created_at.substring(0, 10)}
-                  <Button variant="primary">
-                    💬 Comments{" "}
-                    <Badge bg="secondary">{article.comment_count}</Badge>
-                    <span className="visually-hidden">Number of comments</span>
-                  </Button>
                   <Voter
                     votes={article.votes}
                     article_id={article.article_id}
                   />
+                  <Link to={`/articles/${article.article_id}`}>
+                    <Button variant="primary">
+                      💬 Comments{" "}
+                      <Badge bg="secondary">{article.comment_count}</Badge>
+                      <span className="visually-hidden">
+                        Number of comments
+                      </span>
+                    </Button>
+                  </Link>
                 </div>
               </ListGroup.Item>
             </ListGroup>
