@@ -16,7 +16,6 @@ export default function CommentList({ comments }) {
                 </div>
                 📅{" "}
                 {new Date(comment.created_at.substring(0, 10)).toDateString()}
-                {/* <Voter votes={article.votes} article_id={article.article_id} /> */}
                 <p>{comment.body}</p>
               </div>
             </ListGroup.Item>

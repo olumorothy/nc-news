@@ -11,7 +11,7 @@ import ArticlesByTopic from "./components/ArticlesByTopic";
 import SingleArticle from "./components/SingleArticle";
 
 function App() {
-  const [user, setUser] = useState("Moroti");
+  const [user, setUser] = useState(null);
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ user, setUser }}>

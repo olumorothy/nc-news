@@ -27,6 +27,9 @@ export default function Home() {
           </div>
         );
       })}
+      <Link to={"/articles"}>
+        <h1 className="articles-h1">All Articles</h1>
+      </Link>
     </div>
   );
 }

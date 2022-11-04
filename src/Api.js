@@ -34,3 +34,19 @@ export const fetchCommentByArticleId = (article_id) => {
     return res.data.comments;
   });
 };
+
+export const postCommentByArticleId = (id, user, comment) => {
+  const commentData = {
+    username: user,
+    body: comment,
+  };
+  return newsApi.post(`/articles/${id}/comments`, commentData).then((res) => {
+    return res.data.comment;
+  });
+};
+
+export const fetchAllUsers = () => {
+  return newsApi.get("/users").then((res) => {
+    return res.data;
+  });
+};
