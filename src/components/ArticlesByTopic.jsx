@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { fetchArticles } from "../Api";
+import SortForm from "./SortForm";
 import { ListGroup, Button, Badge, Spinner } from "react-bootstrap";
 import Voter from "./Voter";
 
@@ -8,22 +9,41 @@ export default function ArticlesByTopic() {
   const { topic } = useParams();
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortBy, setSortBy] = useState("created_at");
+  const [order_by, setOrderBy] = useState("desc");
+  const [url, setUrl] = useSearchParams();
 
   useEffect(() => {
     setIsLoading(true);
-    fetchArticles().then((articles) => {
+    fetchArticles(sortBy, order_by).then((articles) => {
       setArticles(articles);
       setIsLoading(false);
     });
-  }, [topic]);
+  }, [topic, sortBy, order_by]);
 
   const filteredArticles = articles.filter(
     (article) => article.topic === topic
   );
 
+  const sortAndOrderBy = (sort, order) => {
+    setSortBy(sort);
+    setOrderBy(order);
+  };
+  const setUrlParams = (url) => {
+    setUrl(url);
+  };
+
   return (
     <div>
-      <h2>Articles on {topic}</h2>
+      <div className="card-body">
+        <h1 className="articles-h1">Articles on {topic}</h1>
+        <SortForm
+          sortAndOrderBy={sortAndOrderBy}
+          sort_by={sortBy}
+          order_by={order_by}
+          setUrlParams={setUrlParams}
+        />
+      </div>
       {isLoading ? (
         <Spinner animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
