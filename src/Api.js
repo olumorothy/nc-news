@@ -4,10 +4,16 @@ const newsApi = axios.create({
   baseURL: "https://earlynews.herokuapp.com/api",
 });
 
-export const fetchArticles = () => {
-  return newsApi.get("/articles").then((res) => {
-    return res.data.articles;
-  });
+export const fetchArticles = (sortBy, order) => {
+  console.log("inside api call", `articles?sort_by=${sortBy}&order=${order}`);
+  return newsApi
+    .get(`/articles?sort_by=${sortBy}&order=${order}`)
+    .then((res) => {
+      return res.data.articles;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 export const fetchTopics = () => {
   return newsApi.get("/topics").then((res) => {

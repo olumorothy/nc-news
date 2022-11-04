@@ -15,6 +15,10 @@ body {
 .btn-vote {
   padding-left: 5px;
 }
+.card-body {
+  padding: 5px;
+  margin: 5px;
+}
 
 /* .blog-container {
   background: #fff;
