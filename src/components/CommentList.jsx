@@ -1,6 +1,16 @@
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
-export default function CommentList({ comments }) {
+import { useContext } from "react";
+
+import { UserContext } from "../context/UserContext";
+
+export default function CommentList({ comments, deleteComment }) {
+  const { user } = useContext(UserContext);
+
+  const removeComment = (id) => {
+    deleteComment(id);
+  };
+
   return (
     <ul>
       {comments.map((comment) => {
@@ -17,6 +27,17 @@ export default function CommentList({ comments }) {
                 📅{" "}
                 {new Date(comment.created_at.substring(0, 10)).toDateString()}
                 <p>{comment.body}</p>
+                {comment.author === user ? (
+                  <Button
+                    onClick={() => {
+                      removeComment(comment.comment_id);
+                    }}
+                  >
+                    Delete comment
+                  </Button>
+                ) : (
+                  <></>
+                )}
               </div>
             </ListGroup.Item>
           </ListGroup>

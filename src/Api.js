@@ -5,7 +5,6 @@ const newsApi = axios.create({
 });
 
 export const fetchArticles = (sortBy, order) => {
-  console.log("inside api call", `articles?sort_by=${sortBy}&order=${order}`);
   return newsApi
     .get(`/articles?sort_by=${sortBy}&order=${order}`)
     .then((res) => {
@@ -54,5 +53,11 @@ export const postCommentByArticleId = (id, user, comment) => {
 export const fetchAllUsers = () => {
   return newsApi.get("/users").then((res) => {
     return res.data;
+  });
+};
+
+export const deleteCommentById = (comment_id) => {
+  return newsApi.delete(`/comments/${comment_id}`).then((res) => {
+    return res.data.comment;
   });
 };

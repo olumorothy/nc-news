@@ -5,6 +5,7 @@ import {
   fetchArticlesById,
   fetchCommentByArticleId,
   postCommentByArticleId,
+  deleteCommentById,
 } from "../Api";
 import { UserContext } from "../context/UserContext";
 
@@ -52,6 +53,19 @@ export default function SingleArticle() {
 
       setCommentIsPosted(!commentIsPosted);
       setBodyOfComment("");
+    });
+  };
+  const deleteComment = (comment_id) => {
+    deleteCommentById(comment_id).then(() => {
+      setComments((currComments) => {
+        const currArticle = { ...article };
+        const newComment = currComments.filter(
+          (comment) => comment.comment_id !== comment_id
+        );
+        setArticle(currArticle);
+        return newComment;
+      });
+      //setCommentDeleted(true);
     });
   };
 
@@ -107,7 +121,11 @@ export default function SingleArticle() {
 
             {commentIsPosted && <p>Comment has been posted</p>}
           </Card.Body>
-          <CommentList comments={comments} />
+          <CommentList
+            comments={comments}
+            article={article}
+            deleteComment={deleteComment}
+          />
         </Card>
       )}
     </div>
