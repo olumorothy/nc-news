@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Articles from "./components/Articles";
 import ArticlesByTopic from "./components/ArticlesByTopic";
 import SingleArticle from "./components/SingleArticle";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +31,7 @@ function App() {
                   path="/articles/:article_id"
                   element={<SingleArticle />}
                 />
+                <Route path="*" element={<ErrorPage />}></Route>
               </Routes>
             </>
           )}

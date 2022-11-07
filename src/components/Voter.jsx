@@ -4,6 +4,7 @@ import { patchArticlesById } from "../Api";
 
 export default function Voter({ article_id, votes }) {
   const [voteCount, setVoteCount] = useState(0);
+  const [error, setError] = useState(null);
 
   const handleVote = (value) => {
     setVoteCount((currentVote) => currentVote + value);
@@ -12,6 +13,11 @@ export default function Voter({ article_id, votes }) {
       .then((data) => {})
       .catch((err) => {
         setVoteCount((currentVote) => currentVote - value);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
       });
   };
 

@@ -4,6 +4,7 @@ import { fetchArticles } from "../Api";
 import SortForm from "./SortForm";
 import { ListGroup, Button, Badge, Spinner } from "react-bootstrap";
 import Voter from "./Voter";
+import ErrorPage from "./ErrorPage";
 
 export default function ArticlesByTopic() {
   const { topic } = useParams();
@@ -12,13 +13,23 @@ export default function ArticlesByTopic() {
   const [sortBy, setSortBy] = useState("created_at");
   const [order_by, setOrderBy] = useState("desc");
   const [url, setUrl] = useSearchParams();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchArticles(sortBy, order_by).then((articles) => {
-      setArticles(articles);
-      setIsLoading(false);
-    });
+    fetchArticles(sortBy, order_by)
+      .then((articles) => {
+        setArticles(articles);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
+      });
   }, [topic, sortBy, order_by]);
 
   const filteredArticles = articles.filter(
@@ -32,6 +43,10 @@ export default function ArticlesByTopic() {
   const setUrlParams = (url) => {
     setUrl(url);
   };
+
+  if (error) {
+    return <ErrorPage error={error} />;
+  }
 
   return (
     <div>

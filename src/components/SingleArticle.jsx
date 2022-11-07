@@ -10,6 +10,7 @@ import {
 import { UserContext } from "../context/UserContext";
 
 import CommentList from "./CommentList";
+import ErrorPage from "./ErrorPage";
 
 import Voter from "./Voter";
 
@@ -22,16 +23,36 @@ export default function SingleArticle() {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [addCommentIsClicked, setAddcommentIsClicked] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setError(null);
     setIsLoading(true);
-    fetchArticlesById(article_id).then((articleInfo) => {
-      setArticle(articleInfo);
-      setIsLoading(false);
-    });
-    fetchCommentByArticleId(article_id).then((commentInfo) => {
-      setComments(commentInfo);
-    });
+    fetchArticlesById(article_id)
+      .then((articleInfo) => {
+        setArticle(articleInfo);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
+      });
+    fetchCommentByArticleId(article_id)
+      .then((commentInfo) => {
+        setComments(commentInfo);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
+      });
   }, [article_id]);
 
   const toggleAddCommentClick = () => {
@@ -44,30 +65,52 @@ export default function SingleArticle() {
     if (!bodyOfComment) {
       return alert("Comment body cannot be empty");
     }
-    postCommentByArticleId(article_id, user, bodyOfComment).then((comment) => {
-      setComments((currentComments) => {
-        const presentComment = [...currentComments];
-        presentComment.unshift(comment);
-        return presentComment;
-      });
+    postCommentByArticleId(article_id, user, bodyOfComment)
+      .then((comment) => {
+        setComments((currentComments) => {
+          const presentComment = [...currentComments];
+          presentComment.unshift(comment);
+          return presentComment;
+        });
 
-      setCommentIsPosted(!commentIsPosted);
-      setBodyOfComment("");
-    });
+        setCommentIsPosted(!commentIsPosted);
+        setBodyOfComment("");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
+      });
   };
   const deleteComment = (comment_id) => {
-    deleteCommentById(comment_id).then(() => {
-      setComments((currComments) => {
-        const currArticle = { ...article };
-        const newComment = currComments.filter(
-          (comment) => comment.comment_id !== comment_id
-        );
-        setArticle(currArticle);
-        return newComment;
+    deleteCommentById(comment_id)
+      .then(() => {
+        setComments((currComments) => {
+          const currArticle = { ...article };
+          const newComment = currComments.filter(
+            (comment) => comment.comment_id !== comment_id
+          );
+          setArticle(currArticle);
+          return newComment;
+        });
+        //setCommentDeleted(true);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
       });
-      //setCommentDeleted(true);
-    });
   };
+
+  if (error) {
+    return <ErrorPage error={error} />;
+  }
 
   const handleBodyChange = (event) => {
     setBodyOfComment(event.target.value);

@@ -1,19 +1,33 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchTopics } from "../Api";
+import ErrorPage from "./ErrorPage";
 
 export default function Home() {
   const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchTopics().then((listOfTopics) => {
-      setTopics(listOfTopics);
-      setIsLoading(false);
-    });
+    fetchTopics()
+      .then((listOfTopics) => {
+        setTopics(listOfTopics);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        const errorData = {
+          status: err.response.status,
+          message: err.response.data.msg,
+        };
+        setError(errorData);
+      });
   }, []);
 
+  if (error) {
+    return <ErrorPage error={error} />;
+  }
   return (
     <div>
       <h2>List of Topics</h2>

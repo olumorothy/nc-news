@@ -9,9 +9,6 @@ export const fetchArticles = (sortBy, order) => {
     .get(`/articles?sort_by=${sortBy}&order=${order}`)
     .then((res) => {
       return res.data.articles;
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 export const fetchTopics = () => {
